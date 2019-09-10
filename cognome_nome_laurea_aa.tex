@@ -20,6 +20,7 @@
 \usepackage{setspace}
 \usepackage[paperheight=29.7cm,paperwidth=21cm,outer=1.5cm,inner=2.5cm,top=2cm,bottom=2cm]{geometry} % per definizione layout
 \usepackage{titlesec} % per formato custom dei titoli dei capitoli
+\usepackage{url}
 
 %%%%%%%%%%%%%%
 % supporto lettere accentate
@@ -74,7 +75,10 @@
     % indice
     \tableofcontents
     \clearpage
-    
+
+
+    \input{sommario}
+    \clearpage
     
           
     % gruppo per definizone di successione capitoli senza interruzione di pagina
@@ -98,7 +102,8 @@
       \titlespacing*{\subsection}{0pt}{0.10in}{0.02in}
       
       % sommario
-      \input{sommario}
+      
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Nota

@@ -1,23 +1,296 @@
-\chapter{In ante nulla, vestibulum a}
-\label{cha:intro}
+\chapter{Blockchain}
+\label{cha:blockchain}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed nunc orci. Aliquam nec nisl vitae sapien pulvinar dictum quis non urna. Suspendisse at dui a erat aliquam vestibulum. Quisque ultrices pellentesque pellentesque. Pellentesque egestas quam sed blandit tempus. Sed congue nec risus posuere euismod. Maecenas ut lacus id mauris sagittis egestas a eu dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque at ultrices tellus. Ut eu purus eget sem iaculis ultricies sed non lorem. Curabitur gravida dui eget ex vestibulum venenatis. Phasellus gravida tellus velit, non eleifend justo lobortis eget. 
-\cite{coulouris}
+The application of the blockchain in multiple fields is gaining more and more 
+traction today, until to be considered by some as the new Internet.
+But actually, the main concept behind this revolutionary idea was described as 
+early as 1991 in an accademic paper\footnote{\url{https://www.anf.es/pdf/Haber_Stornetta.pdf}}
+published by Stuart Haver and W. Scott Stornetta. With their solution, the two 
+scientists aim to Time-Stamp documents, in order to certify when a document
+was created of last changed. The system used a cryptographically secured 
+chain of blocks to store the time-stamped documents and in 1992 Merkle 
+trees were incorporated to the design, making it more efficient by 
+allowing several documents to be collected into one block.\cite{binancevision}
+However, this is not enought. Indeed, to have a fully working blockchain 
+we need to add more components.
 
-Donec eu ipsum id lorem consectetur luctus ac a nisi. Curabitur volutpat, metus id porta ultrices, felis lacus consectetur justo, ut gravida arcu ex in purus. Pellentesque vitae sapien ac nisl porttitor pellentesque eu sed elit. Sed maximus lectus eu eros ultricies accumsan. Quisque congue, nisi in dictum cursus, ante nisl molestie eros, in ultrices eros tellus sit amet augue. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam finibus leo sit amet purus vehicula, eget facilisis turpis convallis. Vivamus varius tincidunt turpis, id venenatis arcu maximus ut. Aenean euismod eros ac nibh facilisis, nec imperdiet ex suscipit.
-\cite{dalal}
 
 
-\section{Pellentesque habitant morbi tristique senectus}
-\label{sec:context}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed nunc orci. Aliquam nec nisl vitae sapien pulvinar dictum quis non urna. Suspendisse at dui a erat aliquam vestibulum. Quisque ultrices pellentesque pellentesque. Pellentesque egestas quam sed blandit tempus. Sed congue nec risus posuere euismod. Maecenas ut lacus id mauris sagittis egestas a eu dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque at ultrices tellus. Ut eu purus eget sem iaculis ultricies sed non lorem. Curabitur gravida dui eget ex vestibulum venenatis. Phasellus gravida tellus velit, non eleifend justo lobortis eget.
-\cite{ictbusiness}
-\cite{donoho}
+\section{Distributed ledger}
+\label{sec:ledger}
 
-\section{Nullam et justo vitae nisi}
-\label{sec:problem}
+As said in a report from the UK Government, "A distributed ledger is 
+essentially an asset database that can be shared across a network of 
+multiple sites, geographies or institutions. All participants within a 
+network can have their own identical copy of the ledger"\cite{ukgov}.
+Due to this technology, there aren't either central administrators or 
+centralized data storages. To have this mechanism working, we need both
+a Peer-to-Peer Network\footnote{the peers are computer systems connected
+to each other via the Internet, the data can be shared directly between 
+systems on the network.} and a Consensus Algorithm \ref{sec:consensus}. 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed nunc orci. Aliquam nec nisl vitae sapien pulvinar dictum quis non urna. Suspendisse at dui a erat aliquam vestibulum. Quisque ultrices pellentesque pellentesque. Pellentesque egestas quam sed blandit tempus. Sed congue nec risus posuere euismod. Maecenas ut lacus id mauris sagittis egestas a eu dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque at ultrices tellus. Ut eu purus eget sem iaculis ultricies sed non lorem. Curabitur gravida dui eget ex vestibulum venenatis. Phasellus gravida tellus velit, non eleifend justo lobortis eget.
+\section{Consensus Algorithms}
+\label{sec:consensus}
+
+To clarify the benefits of this type of algorithms we must start with a 
+dilemma as known as "The Byzantine Generals Problem", in whom, each 
+general has its own army and that each group is situated in different 
+locations around the city they intend to attack. The generals need to 
+agree on either attacking or retreating. It does not matter whether 
+they attack or retreat, as long as all generals reach consensus, 
+i.e., agree on a common decision in order to execute it in coordination. 
+Therefore, we may consider the following requirements:
+\begin{itemize}
+    \item Each general has to decide: attack or retreat (yes or no)
+    \item After the decision is made, it cannot be changed
+    \item All generals have to agree on the same decision and execute it in a synchronized manner
+\end{itemize}
+The aforementioned communication problems are related to the fact that 
+one general is only able to communicate with another through messages, 
+which are forwarded by a courier. Consequently, the central challenge 
+of the Byzantine Generals’ Problem is that the messages can get somehow 
+delayed, destroyed or lost.
+
+In addition, even if a message is successfully delivered, one or more 
+generals may choose (for whatever reason) to act maliciously and send 
+a fraudulent message to confuse the other generals, leading to a total 
+failure.
+
+If we apply the dilemma to the context of blockchains, each general 
+represents a network node, and the nodes need to reach consensus on 
+the current state of the system. Putting in another way, the majority 
+of participants within a distributed network have to agree and execute 
+the same action in order to avoid complete failure.\cite{byzantine}\cite{binancevision}
+There are various implemetation of the mechanism through which a blockchain 
+network reach consensus.
+
+
+\subsection{Proof of Work}
+\label{sec:pow}
+
+Due to Bitcoin \ref{cha:bitcoin}, the most known is the Proof of 
+Work (PoW) algorithm, in whom is utilized for block generation. 
+The process of generating correct proofs in order to add a block 
+to the blockchain is known as “mining” and the individuals that 
+participate in the mining process are known as “miners”.\cite{consensusmedium}
+
+The PoW mining involves numerous hashing attempts, so more computational 
+power means more trials per second. In other words, miners with a high 
+hash rate have better chances to find a valid solution for the next 
+block. The PoW consensus algorithm makes sure that miners are only able 
+to validate a new block and add it to the blockchain if 
+the distributed nodes of the network reach consensus and agree that the 
+block hash provided by the miner is a valid proof of work.\cite{binancevision}
+
+\subsection{Proof of Stake}
+\label{sec:pos}
+
+The Proof of Stake (PoS) consensus algorthm 
+is relatively different and a new way to generate and append blocks in a 
+blockchain. It was developed in 2011 as alternative to PoW, which requirements
+a massive amout of energy to make it work. In fact, according to the 
+bitcoin energy consumption tracker at Digiconomist\footnote{\url{https://digiconomist.net/bitcoin-energy-consumption}}, 
+bitcoin currently consumes 66.7 terawatt-hours per year. That’s comparable 
+to the total energy consumption of the Czech Republic, a country 
+of 10.6 million people.
+
+Basically, the mining process is replaced with a mechanism where blocks are
+validated according to the stake of the participants, also known as "validadors".
+The criteria used to choose the validator depends on the proof of stake system
+but mainly, the choiche is based on the economic stake in the network of 
+each node.\cite{binancevision}\cite{consensusmedium}
+
+\subsection{Proof of Burn}
+\label{sec:pob}
+
+Also the Proof of Burn (PoB) algortigm is an approach to avoid the massive 
+waste of energy used for hashing. Indeed , with this technique, the mining
+process is replaced with a greener one. Where, the "miners" of the PoB 
+coins will send coins to an  uspendable address, known as "eater address".
+Even this transactions are recorded on the blockchain ensuring that the coin 
+cannot be spent again. The principle behind this consensus algorithm is that
+the user burning the cryptocurrency is showing long-term commitment to the
+coin by burnin it. This is because they are taking a short-term loss in 
+exchange for a long-term gain.\cite{consensusmedium}
+
+
+
+
+\section{Advantages and Disadvantages}
+\label{sec:evaluate}
+
+As a result for its complexity, blockchain's potential as a distributed 
+form of record-keeping is almost without limit. But as every other 
+technology, even the blockchain have its pros and cons. 
+
+\subsection{Advantages}
+\label{sec:advantages}
+
+\textbf{Trustless system and small fees}
+In most traditional systems, a consumer pays a bank to verify a transaction,   
+a notary to sign a documents, or a minister to perform a marriage. Using 
+blockchain technologies, this is no longer necessary because the distributed
+nodes verify the transactions through consensus algorithms.\\
+Therefore, blockchain systems negate the risk of trusting a single person or 
+organization and reduces the overall costs and transaction fees by cutting 
+third-parties. For this reason, blockchain is often referred to as a "trustless"
+system.\cite{binancevision}\cite{investopedia}
+\bigskip\\
+\textbf{Improved accuracy by removing human involvement in verification} 
+\bigskip\\
+\textbf{Transactions are secure, private and efficient}
+Also in this case, by eliminating the human factor, we obtain a 24 hours a day 
+working system, instead of institutions operating only during business hours.
+As a result, transactions can be completed in about ten minutes and can be 
+considered secure after just a few hours. Actually, once a transaction is 
+recorded, its authenticity must be verified by the blockchain network. Where, 
+millions of nodes rush to confirm that the details of the transaction are correct.
+
+Moreover, every block of the chain has the hash of the block before it along with
+its own hash, wich is computed with the data contained in the block. So, when
+an information in a block is edited in any way, its own hash will change, but the
+hash in the block after it would not. This contrast makes extremely hard to 
+change data inside the blockchain without beeing noticed.
+
+Considering that the majority of blockchains are pubblic, it means that anyone 
+can access the blockchain and read the data inside it with all the transaction 
+history. So, if anyone can read see all the transactions, why is people say that
+blockchain transactions are anonymous?\\
+That’s why anonymity is confused with confidentiality. Indeed, every user makes 
+public transactions with their unique code called "public key"\footnote{Public-key cryptography, is a cryptographic system that uses pairs of keys: public keys which may be disseminated widely, and private keys which are known only to the owner.},
+which is recorded on the blockchain, rather than their personal information.\cite{investopedia}
+\bigskip\\
+\textbf{Transparency}
+A big benefit to this technology is given by his open source nature. That means
+that the users of the blockchain network can modify the code as they see fit, so long
+as they have the approval from the majority of the network's nodes.
+\bigskip\\
+\textbf{Distributed}
+Blockchain does not store any of its information in a unique node or central 
+location. Instead, data is stored in thousands of devices on a distributed
+network. Whenever a block is added to the chain, every node updates its blockchain
+to reflect the change. Because of this, there is no single point of failure
+and so becomes more difficult to tamper with.\cite{binancevision}\cite{investopedia}
+\bigskip\\
+\textbf{Stability}
+Once a block is confirmed, its extremely difficult to remove or change the data inside it.
+This makes blockchain a great technology for storing financial records or any other data 
+where an audit trail is required because every change is tracked and permanently recorded 
+on a distributed and public ledger.\cite{binancevision}
+\bigskip
+
+\subsection{Disadvantages}
+\label{sec:disadvantages}
+
+While there are significant upsides to the blockchain, there are also serious 
+challenges to its adoption. The most ones are political and regulatory, but 
+there are also some technical challages to take in account.
+\bigskip\\
+\textbf{Energy inefficiency}
+Some blockchains, especially those using Proof of Work consensus algorthms \ref{sec:pow}, are 
+higly inefficient. Since mining is higly competitive and there is 
+only one winner every ten minutes, the work of every other miner is wasted.
+As miners are continually trying to increase their computational power, 
+so they have a greater chance of finding a valid block hash, the resources used 
+by the Bitcoin network has increased significantly in the last few years, and it 
+currently consumes more energy than many countries, such as Denmark, Ireland, 
+and Nigeria.\cite{binancevision}
+\bigskip\\
+\textbf{Scalability}
+The Bitcoin is a perfect case study for the low scalability of blockchains.
+In fact, to add a new block on the blockchain, it takes about ten minutes and
+the maximum size of each block is of 2 MegaBytes. This entails that there is a
+limited number of transaction per block. It is estimated that the Bitcoin's 
+blockchain can manage only seven transactions per second (TPS). Meanwhile, the
+Visa's actual infrastructure can process 24.000 TPS.
+\bigskip\\
+\textbf{51\% Aattacks}
+The consensus algorithms that protetc the blockchain has proven to be very 
+efficient over the years (thanks to ). However, there are a few potential attacks that can 
+be performed against blockchain networks. The most discussed is the  51\% attack.
+Such an attack may happen if one entity manages to control more than 50\% of the 
+network, which would allow them to edit or modify the order of the transactions.
+Altought being theoretically possible, there was never a succesful 51\% attack on 
+the Bitcoin blockchain, additionaly, as the network gets larger, the security 
+increases.\cite{binancevision}
+\bigskip\\
+\textbf{Private keys} 
+Blockchain uses public-key cryptography to give users ownership over their blockchain data.
+Each public-key correspons to a private-key which should be kept secret. Users need their 
+private-key to access their data. If a user loses their private key, the money is 
+effectively lost, and there is nothing they can do about it.\cite{binancevision}
+\bigskip\\
+\textbf{Storage}
+Distributed ledgers can increase very much over time. For example the Bitcoin blockchain
+currently requires 279\footnote{Last update: 10/9/2019} GigaByte of storage. Even if in 
+the Bitcoin paper its said that thanks to "Moore's Law"\cite{bitcoin} the storage should
+not be a problem, the current growth in blockchain size appears to be outstripping the growth
+in hard drives and the network risks losing nodes if the ledger becomes too large for 
+individuals to download and store.\cite{binancevision}
+\section{Use Cases}
+\label{sec:usecases}
+
+The merit to the great attention given to the blockchain technology is to be attributed
+to Bitcoin. Indeed, thanks to this digital currencies (cryptocurrencies) the 
+blockchain-based solutions have grown. So learning how this innovative technology
+can be applied to different scenarious is very important. 
+
+\subsection{Digital Identity}
+\label{sec:identity}
+
+The identity component in a blockchain is fulfilled through the use of cryptographic keys.
+Combining a public and private key creates a strong digital identity reference based 
+on possession of informations or certifications. The public key, is distributed 
+publicly and it is what identifies the identity, the private key is kept secret by
+the identity and it is used to express consent to digital interactions and to 
+sign the data to record in the block.\cite{coindesk}
+
+\subsection{Charity}
+\label{sec:charity}
+
+The number of charitable organizations which addopted cryptocurrencies as a donation
+method is increasing more and more. The reason is because crypto's transparency,
+in fact, thanks to this characteristic, every donation can be tracked and verified.
+So, the higher level of transparency and public accountability can ease donors' minds 
+and encourage them to give while also reinforcing the charity's reputation for integrity.
+Moreover, blockchain technology reduces the fees and taxes to manage every donation by
+reducing the number of required intermediaries.\cite{binancevision}
+
+\subsection{Healthcare}
+\label{sec:healthcare}
+
+Blockchain may offer significant benefits to hospitals in terms of security, 
+interoperability and transparency. Unlike traditional databases that rely on a centralized
+server, the use of a distributed system allows for data exchange with higher levels of 
+security. In addition, distributed ledgers increase the interoperability among clinics,
+hospitals, and other health service providers by allowing all theese parties to interface
+with a unique storage system.
+
+Furthermore, blockchain systems may also give higher levels of accesibility and 
+transparency over their own health information. But also, allows pharmaceutical 
+organizations to increase the efficiency of theri infrastructure by cutting 
+down on the widespread problem of drug counterfeiting.\cite{binancevision}
+
+\subsection{Governance}
+\label{sec:governance}
+
+The governance can be greatly improven in various sectors by the blockchain technologies.
+A short example can be the efficiency of taxes, ideed, because governments rely on 
+taxpayer funds, it's important that they use their budgets wisely. Blockchain systems 
+and smart contracts can be employed to automate tasks and workflows, which would 
+greatly reduce time and money spent on bureaucratic processes.\cite{binancevision}
+
+Another application can be the election process. With the support of a workign digital 
+identity system, and the high level of immutability given by the blockchain, this 
+technology could be an excellent solution for ensuring that votes cannot be tampered with.
+Creating the possibility to transform the secure online voting into a reality. 
+
+\subsection{Payments}
+\label{sec:payments}
+
+Thanks to Bitcoin, this is the most widespread use case of the blockchain. It starts in 
+2008 when Satoshi Nakamoto published the Bitcoin's white paper, where for the first time 
+all the above components of a blockchain was used to solve the double-spendign problem.\pagebreak
 
 
