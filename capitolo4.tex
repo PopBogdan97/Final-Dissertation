@@ -1,17 +1,53 @@
+
 \chapter{Package implementation in R}
 \label{cha:R}
 
-\section{Environment}
+Once understood what is a Bitcoin Cash, how works the technology behind it and the
+reasons why it was created. Its time to start and read some data from the blockchain
+in order to put into practice what we have learned in the above chapters. Moreover,
+after the data is imported, its a good practice to analyze the data in such a way as to 
+get usefull information out of it. To do so, the R programming language will be used.
+
+\section{R}
 \label{sec:enivirionment}
+
+R is an Open Source software for statistical computing(linear and nonlinear
+ modelling, classical statistical tests, time-series analysis, classification,
+ clustering) and graphics. One of R’s strengths is the ease with which well-designed 
+ publication-quality plots can be produced, including mathematical symbols and 
+ formulae where needed.\\
+R is designed around a true computer language, and it allows users to add additional 
+functionality by defining new functions. Much of the system is itself written in the 
+R which makes it easy for users to follow the algorithmic choices made. But, for
+computationally-intensive tasks, C, C++ and Fortran code can be linked and called 
+at run time. Furthermore, thanks to its Open Source nature, it can be easily extended
+via "Packages" even written by the user himself.\cite{r}
 
 \section{Feasibility study}
 \label{sec:study}
 
-\section{Implementation}
-\label{sec:implementation}
+The goal for this project is to extend the R lenguage with a package which allow us
+to read and analyze the information into the blockchain Bitcoin Cash.\\
+To make it in the best way, firstly was done a research of the existing 
+implementations, unfortunately, whitout any result. But, it brings us two 
+completely differnt ways to realize the package. \\
+The first one was to turn the used device into a node of the Bitcoin Cash network.
+This lead user to download all the blockchain and make all the queries locally.
+As a result, the queries will be very fast and all the data of the blockchain can
+be manipulated as you desire. But, on the other hand, storing all the blockchain 
+requires a lot of space on you device (around 143 GigaByte on 13/9/2019). So making
+a package of that size doesn't seem to be the best option.\\
+For theese reasons, the second way was choosen. Altough its slowest implementation,
+it avoids the need to become a node of the network, making the installation of the
+package very simple and fast. That was obtained by relying on a service provider.
+
+\section{Package integration}
+\label{sec:integration}
+
+
 
 \subsection{Commands}
-\label{sec:blocksize}
+\label{sec:commands}
 
 \section{Usage samples}
-\label{sec:mining}
+\label{sec:sample}
