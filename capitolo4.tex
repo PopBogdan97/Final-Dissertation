@@ -5,14 +5,14 @@
 Once understood what is a Bitcoin Cash, how works the technology behind it and the
 reasons why it was created. Its time to start and read some data from the blockchain
 in order to put into practice what we have learned in the above chapters. Moreover,
-after the data is imported, its a good practice to analyze the data in such a way as to 
-get usefull information out of it. To do so, the R programming language will be used.
+after the data is imported, it is a good practice to analyze the data in such a way as to 
+get useful information out of it. To do so, the R programming language will be used.
 
 \section{R}
 \label{sec:enivirionment}
 
 R is an Open Source software for statistical computing(linear and nonlinear
- modelling, classical statistical tests, time-series analysis, classification,
+ modeling, classical statistical tests, time-series analysis, classification,
  clustering) and graphics. One of R’s strengths is the ease with which well-designed 
  publication-quality plots can be produced, including mathematical symbols and 
  formulae where needed.\\
@@ -26,18 +26,18 @@ via "Packages" even written by the user himself.\cite{r}
 \section{Feasibility study}
 \label{sec:study}
 
-The goal for this project is to extend the R lenguage with a package which allow us
-to read and analyze the information into the blockchain Bitcoin Cash.\\
-To make it in the best way, firstly was done a research of the existing 
-implementations, unfortunately, whitout any result. But, it brings us two 
-completely differnt ways to realize the package. \\
+The goal for this project is to extend the R language with a package which allows us
+to read and analyze the information into the Bitcoin Cash blockchain.\\
+To make it in the best way, firstly, was done a research of the existing 
+implementations, unfortunately, without any result. But, it brings us two 
+completely different ways to realize the package. \\
 The first one was to turn the used device into a node of the Bitcoin Cash network.
-This lead user to download all the blockchain and make all the queries locally.
+This leads the user to download all the blockchain and make all the queries locally.
 As a result, the queries will be very fast and all the data of the blockchain can
 be manipulated as you desire. But, on the other hand, storing all the blockchain 
-requires a lot of space on you device (around 143 GigaByte on 13/9/2019). So making
+requires a lot of space on your device (around 143 GigaByte on 13/9/2019). So making
 a package of that size doesn't seem to be the best option.\\
-For theese reasons, the second way was choosen. Altough its slowest implementation,
+For these reasons, the second way was chosen. Although it is the slowest implementation,
 it avoids the need to become a node of the network, making the installation of the
 package very simple and fast. That was obtained by relying on a service provider (SP).
 
@@ -47,54 +47,54 @@ package very simple and fast. That was obtained by relying on a service provider
 Once decided the more convenient option to adopt, it was necessary to do another
 research phase. In fact, it is pretty difficult to find a SP which 
 not only implemented an "Application Programming Interface" (API) where you can 
-make queries an have the wanted data as a response. But also makes the pubblic, 
-so anyone can use it. Additionaly, the service providers was choosen also 
+make queries an have the wanted data as a response. But also makes it public, 
+so anyone can use it. Additionally, the service providers were chosen also 
 according to the amount of data provided, the format of the response and the 
 number of queries you are allowed to make. At the end, the picks were:
 \begin{itemize}
     \item Blockdozer Explorer
     \item Blockchair
 \end{itemize} 
-The motivation for these two options, is the fact that they are complementary.
-The first one, allows an illimitate number of queries returning essential information.
-The second one instead, has a limit of 30 queries per minute, but returns more 
-and better formatted data. 
+The motivation for these two options is the fact that they are complementary.
+The first one allows an unlimited number of queries returning essential information.
+The second one instead, has a limit of 30 queries per minute but returns more 
+and better-formatted data. 
 
 Let's start with the technical implementation by saying that to maintain all the R project, 
 was used the RStudio editor.\\ 
 First of all, it is necessary to create and manage a new package in R. For this 
-purpose, some other package are required : 
+purpose, some other packages are required : 
 \begin{itemize}
     \item "devetools"   - To manage the project and the source code of the new package.
     \item "roxygenize2" - To handle all the documentation of the package.
 \end{itemize}
-Then its necessary to install other two package to handle the data and the connection with 
+Then it is necessary to install the other two packages to handle the data and the connection with 
 the service providers.
 \begin{itemize}
-    \item "httr"        - To perform correctly the http requests to the service providers and receive the linked response
+    \item "httr"        - To perform correctly the Http requests to the service providers and receive the linked response
     \item "jsonlite"    - To manipulate and store the received data, in order to have a good dataset for the future analysis
 \end{itemize}
 Now we are ready to perform a simple query to an API. Let's say that we want to know
 some information about a specific Bitcoin Cash address. After choosing the appropriate SP,
-we have to read their documentation and see how to correctly build the http request. 
-In this case the pattern is: \medskip
+we have to read their documentation and see how to correctly build the Http request. 
+In this case, the pattern is: \medskip
 
 \textit{GET /api/addr/\{paymentAddress\}[?noTxList\&from\&to\&returnLegacyAddresses]}
 \\
 \begin{figure}[h]
     \centering
     \includegraphics[height=2cm]{create_call.png}
-    \caption{Example of the building of a http request}
+    \caption{Example of the building of an Http request}
     \label{fig:request}
 \end{figure}\\
-With a few lines code, we can than construct a possible request for our information. 
+With a few lines code, we can then construct a possible request for our information. 
 As a result we can have:\medskip
 
 \textit{https://blockdozer.com/insight-api/addr/qrn0adtaah922mwz3vems7jqf6hpemdppu2mvm75xe/?noTxList=1}
 \medskip\\
 As said before, the response will be in a json format and will be handled thanks to the
-jsonlite package. But due to the multiple ways to manipulate the data, its 
-suggested to go on the GitHub repository\footnote{\url{github.com/PopBogdan97/bCashReader}} and take a look to the source code.
+jsonlite package. But due to the multiple ways to manipulate the data, it is 
+suggested to go on the GitHub repository\footnote{\url{github.com/PopBogdan97/bCashReader}} and take a look at the source code.
 \begin{figure}[h]
     \centering
     \includegraphics[height=5cm]{json_sample.png}
@@ -108,7 +108,7 @@ suggested to go on the GitHub repository\footnote{\url{github.com/PopBogdan97/bC
 
 Due to the multiple data formats provided by the Service Providers and the 
 different information that can be retrieved from the Bitcoin Cash blockchain, 
-we can suddivide all the implemented commands in four macro categories.\medskip\\
+we can subdivide all the implemented commands in four macro categories.\medskip\\
 \textbf{Address Commands}
 \begin{table}[!ht]
     \centering
