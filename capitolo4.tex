@@ -2,16 +2,16 @@
 \chapter{Package implementation in R}
 \label{cha:R}
 
-Once understood what is a Bitcoin Cash, how works the technology behind it and the
-reasons why it was created. Its time to start and read some data from the blockchain
-in order to put into practice what we have learned in the above chapters. Moreover,
-after the data is imported, it is a good practice to analyze the data in such a way as to 
-get useful information out of it. To do so, the R programming language will be used.
+Once understood what Bitcoin Cash is, how the technology works behind it and the
+reasons why it was created. We are going to describe how we can extract information
+from the blockchain using the R programming environment. We will describe how we
+can read blocks and all the data inside them, allowing us to make some useful analysis
+on the Bitcoin Cash behaviour. 
 
 \section{R}
-\label{sec:enivirionment}
+\label{sec:environment}
 
-R is an Open Source software for statistical computing(linear and nonlinear
+R\cite{rint} is an Open Source software for statistical computing (linear and nonlinear
  modeling, classical statistical tests, time-series analysis, classification,
  clustering) and graphics. One of R’s strengths is the ease with which well-designed 
  publication-quality plots can be produced, including mathematical symbols and 
@@ -21,62 +21,61 @@ functionality by defining new functions. Much of the system is itself written in
 R which makes it easy for users to follow the algorithmic choices made. But, for
 computationally-intensive tasks, C, C++ and Fortran code can be linked and called 
 at run time. Furthermore, thanks to its Open Source nature, it can be easily extended
-via "Packages" even written by the user himself.\cite{r}
+via "Packages" even written by the user.\cite{rint}
 
 \section{Feasibility study}
 \label{sec:study}
 
 The goal for this project is to extend the R language with a package which allows us
-to read and analyze the information into the Bitcoin Cash blockchain.\\
-To make it in the best way, firstly, was done a research of the existing 
-implementations, unfortunately, without any result. But, it brings us two 
-completely different ways to realize the package. \\
+to read and analyse the information contained into the Bitcoin Cash blockchain.\\
+To make it in the best way, firstly, a research for the existing implementations has 
+been done, but unfortunately, without any result. Except for two 
+completely different ways to build the package. \\
 The first one was to turn the used device into a node of the Bitcoin Cash network.
-This leads the user to download all the blockchain and make all the queries locally.
-As a result, the queries will be very fast and all the data of the blockchain can
-be manipulated as you desire. But, on the other hand, storing all the blockchain 
-requires a lot of space on your device (around 143 GigaByte on 13/9/2019). So making
-a package of that size doesn't seem to be the best option.\\
+This lead the user to download all the blockchain and make all the queries locally.
+As a result, the queries turned out to be very fast and all the data of the blockchain 
+manipulated as one may desire. But, on the other hand, storing all the blockchain 
+requires a lot of space on the device (around 143 GigaByte on 13/9/2019). So making
+a package of that size does not seem to be the best option.\\
 For these reasons, the second way was chosen. Although it is the slowest implementation,
-it avoids the need to become a node of the network, making the installation of the
+it avoided the need to become a node of the network, and thus making the installation of the
 package very simple and fast. That was obtained by relying on a service provider (SP).
 
 \section{Package integration}
 \label{sec:integration}
 
-Once decided the more convenient option to adopt, it was necessary to do another
-research phase. In fact, it is pretty difficult to find a SP which 
-not only implemented an "Application Programming Interface" (API) where you can 
-make queries an have the wanted data as a response. But also makes it public, 
+For the second option, it was rather difficult to find a SP which 
+not only implemented an "Application Programming Interface" (API)\cite{api} where one could
+make queries and have the wanted data as a response. But also made it public, 
 so anyone can use it. Additionally, the service providers were chosen also 
 according to the amount of data provided, the format of the response and the 
-number of queries you are allowed to make. At the end, the picks were:
+number of queries one was allowed to make. At the end, the picks were:
 \begin{itemize}
-    \item Blockdozer Explorer
-    \item Blockchair
+    \item Blockdozer Explorer.
+    \item Blockchair.
 \end{itemize} 
-The motivation for these two options is the fact that they are complementary.
-The first one allows an unlimited number of queries returning essential information.
-The second one instead, has a limit of 30 queries per minute but returns more 
+The motivation for these two options was the fact that they were complementary.
+The first one allowed an unlimited number of queries returning essential information.
+The second one instead, had a limit of 30 queries per minute but returned more 
 and better-formatted data. 
 
-Let's start with the technical implementation by saying that to maintain all the R project, 
-was used the RStudio editor.\\ 
+Let us begin with the technical implementation by saying that in order to maintain all the R project, 
+was used the RStudio editor\cite{rstudio} has been used.\\ 
 First of all, it is necessary to create and manage a new package in R. For this 
 purpose, some other packages are required : 
 \begin{itemize}
-    \item "devetools"   - To manage the project and the source code of the new package.
-    \item "roxygenize2" - To handle all the documentation of the package.
+    \item \textit{devetools}   : to manage the project and the source code of the new package.
+    \item \textit{roxygenize2} : to handle all the documentation of the package.
 \end{itemize}
 Then it is necessary to install the other two packages to handle the data and the connection with 
 the service providers.
 \begin{itemize}
-    \item "httr"        - To perform correctly the Http requests to the service providers and receive the linked response
-    \item "jsonlite"    - To manipulate and store the received data, in order to have a good dataset for the future analysis
+    \item \textit{httr}        :to perform correctly the Http requests to the service providers and receive the linked response
+    \item \textit{jsonlite}    :to manipulate and store the received data, in order to have a good dataset for the future analysis
 \end{itemize}
-Now we are ready to perform a simple query to an API. Let's say that we want to know
+With these tools is possible to proceed to the performing of a simple query to an API. Suppose one might to know
 some information about a specific Bitcoin Cash address. After choosing the appropriate SP,
-we have to read their documentation and see how to correctly build the Http request. 
+their documentation must be readed and seen how to correctly build the Http request. 
 In this case, the pattern is: \medskip
 
 \textit{GET /api/addr/\{paymentAddress\}[?noTxList\&from\&to\&returnLegacyAddresses]}
@@ -87,18 +86,19 @@ In this case, the pattern is: \medskip
     \caption{Example of the building of an Http request}
     \label{fig:request}
 \end{figure}\\
-With a few lines code, we can then construct a possible request for our information. 
-As a result we can have:\medskip
+With a few lines code, we can then construct a possible request for the desired information. 
+As a result one can have:\medskip
 
 \textit{https://blockdozer.com/insight-api/addr/qrn0adtaah922mwz3vems7jqf6hpemdppu2mvm75xe/?noTxList=1}
 \medskip\\
-As said before, the response will be in a json format and will be handled thanks to the
-jsonlite package. But due to the multiple ways to manipulate the data, it is 
-suggested to go on the GitHub repository\footnote{\url{github.com/PopBogdan97/bCashReader}} and take a look at the source code.
+As said before, the response will be in a \textit{json} format and will be handled thanks to the
+\textit{jsonlite} package. But due to the multiple ways to manipulate the data, it is 
+suggested to look the source code on the GitHub repository: \url{github.com/PopBogdan97/bCashReader}
 \begin{figure}[h]
+
     \centering
     \includegraphics[height=5cm]{json_sample.png}
-    \caption{Example json response}
+    \caption{Example \textit{json} response}
     \label{fig:response}
 \end{figure}\pagebreak
 
@@ -108,66 +108,144 @@ suggested to go on the GitHub repository\footnote{\url{github.com/PopBogdan97/bC
 
 Due to the multiple data formats provided by the Service Providers and the 
 different information that can be retrieved from the Bitcoin Cash blockchain, 
-we can subdivide all the implemented commands in four macro categories.\medskip
-\textbf{Address Commands}
+one can subdivide all the implemented commands in four macro categories.\medskip\\
+\textbf{Address Commands.} All the next commands give the possibility to make different
+type of queries on the address details by giving only address identifier as the argument
+of the function. It could be in both LegacyAddress (those similar to Bitcoin) and Cashaddr
+(the new format eplained here \ref{sec:addresses}).
 \begin{table}[!ht]
     \centering
     \begin{tabular}{||l|p{6cm}||}
     \hline
     \textbf{Function}                          & \textbf{Description}                                                  \\ \hline
-    addr\_balance(hash string)                 & Get the balance of a Bitcoin Cash address.                            \\ \hline
-    addr\_history(hash string)                 & Get the general data (history) of a Bitcoin Cash address.             \\ \hline
-    addr\_totalReceived(hash string)           & Get the total amount of Bitcoin Cash received by the address.         \\ \hline
-    addr\_totalSent(hash string)               & Get the total amount of Bitcoin Cash sent by the address.             \\ \hline
-    addr\_txApperances(hash string)            & Get the total amount of transactions made by the address.             \\ \hline
-    addr\_txs(hash string)                     & Get the all the transactions made by the address.                     \\ \hline
-    addr\_unconfirmedBalance(hash string)      & Get the unconfirmed balance of a Bitcoin Cash address.                \\ \hline
-    addr\_unconfirmedTransactions(hash string) & Get the total amount of unconfirmed transactions made by the address. \\ \hline
-    addr\_utxo(hash string)                    & Get the unspent transactions (UTXO) of an address.                    \\ \hline
+    \textit{addr\_balance(hash string)}                 & Get the balance of a Bitcoin Cash address.                            \\ \hline
+    \textit{addr\_history(hash string)}                 & Get the general data (history) of a Bitcoin Cash address.             \\ \hline
+    \textit{addr\_totalReceived(hash string)}           & Get the total amount of Bitcoin Cash received by the address.         \\ \hline
+    \textit{addr\_totalSent(hash string)}               & Get the total amount of Bitcoin Cash sent by the address.             \\ \hline
+    \textit{addr\_txApperances(hash string)}            & Get the total amount of transactions made by the address.             \\ \hline
+    \textit{addr\_txs(hash string)}                     & Get the all the transactions made by the address.                     \\ \hline
+    \textit{addr\_unconfirmedBalance(hash string)}      & Get the unconfirmed balance of a Bitcoin Cash address.                \\ \hline
+    \textit{addr\_unconfirmedTransactions(hash string)} & Get the total amount of unconfirmed transactions made by the address. \\ \hline
+    \textit{addr\_utxo(hash string)}                    & Get the unspent transactions (UTXO) of an address.                    \\ \hline
     \end{tabular}
-    \end{table}
-\medskip 
-\textbf{Block Commands}
+    \end{table}\\
+\textbf{Block Commands.} The underlying commands allow to retrieve all the information about the 
+blocks by inserting as parameter of the function three types data: \textit{Date, block's hash}, and \textit{block's height }in the blockchain.
 \begin{table}[!ht]
     \centering
     \begin{tabular}{||l|p{6cm}||}
     \hline
     \textbf{Function}                          & \textbf{Description}                                                  \\ \hline
-    block\_byDate("yyyy-MM-dd" string)                 & Get all the blocks in a specific Date with the format yyyy-MM-dd.                          \\ \hline
-    block\_byDateCount("yyyy-MM-dd" string)    & Get the block count in a specific Date with the format yyyy-MM-dd.             \\ \hline
-    block\_byHash(hash string)                 & Get the information of a specific Bitcoin Cash block (without the transactions).         \\ \hline
-    block\_byHashRaw(hash string)              & Get the raw information of a specific Bitcoin Cash block.             \\ \hline
-    block\_byHashTxs(hash string)              & Get the transaction hashes of a specific Bitcoin Cash block.             \\ \hline
-    block\_byHeight(height integer)            & Get the informations contained in a specific Bitcoin Cash block.                     \\ \hline
+    \textit{block\_byDate("yyyy-MM-dd" string)}                 & Get all the blocks in a specific Date with the format yyyy-MM-dd.                          \\ \hline
+    \textit{block\_byDateCount("yyyy-MM-dd" string)}    & Get the block count in a specific Date with the format yyyy-MM-dd.             \\ \hline
+    \textit{block\_byHash(hash string)}                 & Get the information of a specific Bitcoin Cash block (without the transactions).         \\ \hline
+    \textit{block\_byHashRaw(hash string)}              & Get the raw information of a specific Bitcoin Cash block.             \\ \hline
+    \textit{block\_byHashTxs(hash string)}              & Get the transaction hashes of a specific Bitcoin Cash block.             \\ \hline
+    \textit{block\_byHeight(height integer)}            & Get the information contained in a specific Bitcoin Cash block.                     \\ \hline
     \end{tabular}
-    \end{table}\pagebreak
-\medskip 
-\textbf{Transaction Commands}
-\begin{table}[!ht]
-    \centering
-    \begin{tabular}{||l|p{6cm}||}
-    \hline
-    \textbf{Function}                          & \textbf{Description}                                                  \\ \hline
-    txs\_byHash(hash string)                   & Get the all the information of a specific transaction\footnotemark[2].                          \\ \hline
-    txs\_byHashIn(hash string)         & Get the all the information of a specific transaction inputs\footnotemark[2].      \\ \hline
-    txs\_byHashOut(hash string)                & Get the all the information of a specific transaction outputs\footnotemark[2].          \\ \hline
-    \end{tabular}
-    \end{table}
-\footnotetext[2]{To see the description of the values retrieved visit: \url{https://github.com/Blockchair/Blockchair.Support/blob/master/API_DOCUMENTATION_EN.md#link_chainstats} in Dashboard/transaction}
-\medskip 
-\textbf{Chain Commands}
+    \end{table}\pagebreak\\
+\textbf{Transaction Commands.} The later functions return the information of a specific transaction and its 
+inputs and outputs by knowing the \textit{transaction hash}.
 \begin{table}[!ht]
     \centering
     \begin{tabular}{||p{6.2cm}|p{6cm}||}
     \hline
     \textbf{Function}                          & \textbf{Description}                                                  \\ \hline
-    chain\_currency()                           & Get the Bitcoin Cash current value..                          \\ \hline
-    chain\_stats()                              & Get the Bitcoin Cash current blockchain stats\footnotemark[3].              \\ \hline
+    \textit{txs\_byHash(hash string)}                   & Get the all the information of a specific transaction.                          \\ \hline
+    \textit{txs\_byHashIn(hash string)}         & Get the all the information of a specific transaction inputs.      \\ \hline
+    \textit{txs\_byHashOut(hash string)}                & Get the all the information of a specific transaction outputs.          \\ \hline
+    \end{tabular}
+    \end{table}\\
+To see the description of the alle values retrieved by the functions visit the Blockchair 
+documentation\cite{blockchair} in section \textit{Dashboard/transaction}\medskip \\
+\textbf{Chain Commands.} These last commands give live information and statistics on the behaviour of the Bitcoin Cash 
+blockchain.
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{||p{6.2cm}|p{6cm}||}
+    \hline
+    \textbf{Function}                          & \textbf{Description}                                                  \\ \hline
+    \textit{chain\_currency()}                           & Get the Bitcoin Cash current value..                          \\ \hline
+    \textit{chain\_stats()}                              & Get the Bitcoin Cash current blockchain stats.              \\ \hline
    \end{tabular}
-    \end{table}
-\footnotetext[3]{To see the description of the values retrieved visit: \url{https://github.com/Blockchair/Blockchair.Support/blob/master/API_DOCUMENTATION_EN.md#link_chainstats"} in Dashboard/stats.}
+    \end{table}\\
+    To see the description of the alle values retrieved by the functions visit the Blockchair documentation\cite{blockchair} in section \textit{Dashboard/stats}
 
 
 \section{Usage samples}
 \label{sec:sample}
-repository
+At this point, we can start using the package functionalities to retrieve some data 
+from the Service Providers we chose and make some analysis from which we shall
+extract useful information.
+
+\subsection{Block size}
+The Block size was the primary reason for the Hard Fork on August 1$^{st}$, 2017. Orginally,
+the dimension of Bitcoin's blocks was of 1 MegaByte and in order to increase the 
+scalability of the network, with Bitcoin Cash, it has been raised to 8 MegaBytes.
+A relevant analysis could be done by inspecting all the blocks to 
+get the real size of each mined block since the BCH Hark Fork.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{blocksize2.png}
+    \caption{Graph of the dimension of each mined block since August 1$^{st}$, 2017}
+    \label{fig:request}
+\end{figure}\pagebreak
+
+Thanks to this Graph, it is possible to determine that almost one year later, the block 
+size has incremented again bringing the dimension of a block up to 32 MegaBytes. 
+But, even if there is a lot of space in each block, it is not entirely used, 
+actually for the most of the time is used just a small portion of its capacity.
+
+\subsection{Transactions}
+Growing the block size, was only a mean for increasing the number of the transactions 
+in each block. Thus, not only the scalability has been improved, but also the fees for every 
+transaction have been lowered. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{transactions1.png}
+    \caption{Graph of the number of transactions per block since August 1$^{st}$, 2017}
+    \label{fig:request}
+\end{figure}
+
+By watching the above graphs it is possible to see and to analyse the behaviour of the transaction count
+related to the size of each block. Moreover, a comparison shall be made between Bitcoin and Bitcoin Cash throughput.
+The BTC network can handle a maximum of 7-8 TPS\cite{thecryptonomist}. Meanwhile, by reading 
+the graph and by making a little bit of math, the throughput of the Bitcoin Cash network can be estimated. 
+Considering that a block is mined every 10 minutes, the formula to find the throughput is: \smallskip
+
+$TPS = Transactios per block / minutes per block / 60 seconds$. \smallskip\\
+The above graph shows that the BCH throughput is more than: $150.000 / 10 / 60 = 250 TPS$
+
+\subsection{Mining Pools}
+As already mentioned, the consensus algorithm adopted by Bitcoin Cash is the Proof of Work.
+With the growing of the Bitcoin Cash network, also the number of miners has grown. In fact, 
+there is a massive electricity consumption for the mining process. That leads also to a 
+massive computational power. Furthermore, trying to mine a block as an individual is a waste of
+resources, because, by comparing your computational power with the one of the entire network, your
+probability to close a block before the entire network is extremely low. For this reason 
+mining pools have been created. In this way, if someone wants to participate at the mining process,
+he/she has just to join a mining pool where all the computational power of the participants is combined.
+At this point, the probability for a pool to mine a block is much more, and in case it succeeds in 
+closing a block, the rewarding is distributed to all the participants proportionally to their computational power.\pagebreak 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[height = 7cm]{poolminers.png}
+    \caption{Proportion of the mined blocks since Auguts 1$^{st}$, 2017 by each mining pool}
+    \label{fig:request}
+\end{figure}
+
+In the graph above, we can see in proportion how many blocks have mined every mining pool and
+how many pools joined in mining Bitcoin Cash ever since his birth.\\
+With the next graph, we can extend the analysis of the mining pools by spreading them over the time.
+By doing so, we can also have an overall idea on how much computational power each pool spent 
+in a specific period.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{stackblocks.png}
+    \caption{Number of blocks mined by each mining pool since August 1$^{st}$, 2017}
+    \label{fig:request}
+\end{figure}
