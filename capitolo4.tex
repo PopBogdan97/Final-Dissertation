@@ -108,7 +108,7 @@ suggested to go on the GitHub repository\footnote{\url{github.com/PopBogdan97/bC
 
 Due to the multiple data formats provided by the Service Providers and the 
 different information that can be retrieved from the Bitcoin Cash blockchain, 
-we can subdivide all the implemented commands in four macro categories.\medskip\\
+we can subdivide all the implemented commands in four macro categories.\medskip
 \textbf{Address Commands}
 \begin{table}[!ht]
     \centering
@@ -126,14 +126,14 @@ we can subdivide all the implemented commands in four macro categories.\medskip\
     addr\_utxo(hash string)                    & Get the unspent transactions (UTXO) of an address.                    \\ \hline
     \end{tabular}
     \end{table}
-\medskip\\
+\medskip 
 \textbf{Block Commands}
 \begin{table}[!ht]
     \centering
     \begin{tabular}{||l|p{6cm}||}
     \hline
     \textbf{Function}                          & \textbf{Description}                                                  \\ \hline
-    block\_byDate(hash string)                 & Get all the blocks in a specific Date with the format yyyy-MM-dd.                          \\ \hline
+    block\_byDate("yyyy-MM-dd" string)                 & Get all the blocks in a specific Date with the format yyyy-MM-dd.                          \\ \hline
     block\_byDateCount("yyyy-MM-dd" string)    & Get the block count in a specific Date with the format yyyy-MM-dd.             \\ \hline
     block\_byHash(hash string)                 & Get the information of a specific Bitcoin Cash block (without the transactions).         \\ \hline
     block\_byHashRaw(hash string)              & Get the raw information of a specific Bitcoin Cash block.             \\ \hline
@@ -141,7 +141,7 @@ we can subdivide all the implemented commands in four macro categories.\medskip\
     block\_byHeight(height integer)            & Get the informations contained in a specific Bitcoin Cash block.                     \\ \hline
     \end{tabular}
     \end{table}\pagebreak
-\medskip\\
+\medskip 
 \textbf{Transaction Commands}
 \begin{table}[!ht]
     \centering
@@ -149,12 +149,12 @@ we can subdivide all the implemented commands in four macro categories.\medskip\
     \hline
     \textbf{Function}                          & \textbf{Description}                                                  \\ \hline
     txs\_byHash(hash string)                   & Get the all the information of a specific transaction\footnotemark[2].                          \\ \hline
-    txs\_byHashIn("yyyy-MM-dd" string)         & Get the all the information of a specific transaction inputs\footnotemark[2].      \\ \hline
+    txs\_byHashIn(hash string)         & Get the all the information of a specific transaction inputs\footnotemark[2].      \\ \hline
     txs\_byHashOut(hash string)                & Get the all the information of a specific transaction outputs\footnotemark[2].          \\ \hline
     \end{tabular}
     \end{table}
 \footnotetext[2]{To see the description of the values retrieved visit: \url{https://github.com/Blockchair/Blockchair.Support/blob/master/API_DOCUMENTATION_EN.md#link_chainstats} in Dashboard/transaction}
-\medskip\\
+\medskip 
 \textbf{Chain Commands}
 \begin{table}[!ht]
     \centering
